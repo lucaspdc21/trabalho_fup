@@ -1,0 +1,112 @@
+def imprimir_tabuleiro(tabuleiro):
+    for linha in tabuleiro:
+        print(linha)
+
+def inicializar_tabuleiro():
+    tabuleiro_inicial = [
+    ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
+    ["o", "#", "o", "#", "o", "#", "o", "#", "o", "#"],
+    ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
+    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
+    [" ", "#", " ", "#", " ", "#", " ", "#", " ", " "],
+    ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
+    ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"],
+    ["#", "@", "#", "@", "#", "@", "#", "@", "#", "@"],
+    ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"]
+]
+    tabuleiro = []
+    letras = "ABCDEFGHIJ"
+    numeros = "0123456789"
+
+    linha_superior = "  " + "|".join([""+letra+"" for letra in letras]) + ""
+    linha_inferior = "  " + "|".join([""+letra+"" for letra in letras]) + ""
+
+    separador = " +-+-+-+-+-+-+-+-+-+-+ "
+    tabuleiro.append(linha_superior)
+    tabuleiro.append(separador)
+
+    for i in range(10):
+        linha = numeros[i] + "|"
+        for j in range(10):
+            linha += "" + tabuleiro_inicial[i][j] + "|"
+        linha += numeros[i]
+        tabuleiro.append(linha)
+        tabuleiro.append(separador)
+
+    tabuleiro.append(linha_inferior)
+
+    return tabuleiro
+
+def movimento_valido(tabuleiro, jogador, coluna_inicial, linha_inicial, coluna_final, linha_final):
+    # Verificar se as coordenadas estão dentro do tabuleiro
+    if coluna_inicial < 0 or coluna_inicial >= 10 or linha_inicial < 0 or linha_inicial >= 10 or coluna_final < 0 or coluna_final >= 10 or linha_final < 0 or linha_final >= 10:
+        return False
+
+    # Verificar se a posição inicial contém a peça do jogador
+    if jogador == "C" and tabuleiro[linha_inicial][coluna_inicial] != "o" and tabuleiro[linha_inicial][coluna_inicial] != "O":
+        return False
+    elif jogador == "B" and tabuleiro[linha_inicial][coluna_inicial] != "@" and tabuleiro[linha_inicial][coluna_inicial] != "&":
+        return False
+
+    # Verificar se a posição final está vazia
+    if tabuleiro[linha_final][coluna_final] != " ":
+        return False
+
+    # Verificar se o movimento é diagonal
+    if abs(coluna_final - coluna_inicial) != abs(linha_final - linha_inicial):
+        return False
+
+    # Verificar se é um movimento válido para uma peça normal
+    if tabuleiro[linha_inicial][coluna_inicial] == "o" or tabuleiro[linha_inicial][coluna_inicial] == "@":
+        if jogador == "C" and linha_final > linha_inicial:
+            return False
+        elif jogador == "B" and linha_final < linha_inicial:
+            return False
+
+    return True
+
+def realizar_movimento(tabuleiro, jogador, coluna_inicial, linha_inicial, coluna_final, linha_final):
+    tabuleiro[linha_final][coluna_final] = tabuleiro[linha_inicial][coluna_inicial]
+    tabuleiro[linha_inicial][coluna_inicial] = " "
+
+def jogo_damas():
+    tabuleiro = inicializar_tabuleiro()
+    jogador_atual = "C"
+
+    while True:
+        imprimir_tabuleiro(tabuleiro)
+
+        if jogador_atual == "C":
+            print("Jogador atual: C (o)")
+        else:
+            print("Jogador atual: B (@)")
+
+        movimento = input("Digite o movimento (exemplo: C3-D4): ")
+        movimento = movimento.upper()
+
+        if movimento == "SAIR":
+            print("Jogo encerrado.")
+            break
+
+        if len(movimento) != 6:
+            print("Movimento inválido! Digite novamente.")
+            continue
+
+        coluna_inicial = ord(movimento[0]) - ord('A') + 1
+        linha_inicial = int(movimento[1])
+        coluna_final = ord(movimento[3]) - ord('A') + 1
+        linha_final = int(movimento[4])
+
+        if not movimento_valido(tabuleiro, jogador_atual, coluna_inicial, linha_inicial, coluna_final, linha_final):
+            print("Movimento inválido! Digite novamente.")
+            continue
+
+        realizar_movimento(tabuleiro, jogador_atual, coluna_inicial, linha_inicial, coluna_final, linha_final)
+
+        if jogador_atual == "C":
+            jogador_atual = "B"
+        else:
+            jogador_atual = "C"
+
+jogo_damas()
