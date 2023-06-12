@@ -10,15 +10,22 @@ def imprimir_tabuleiro(tabuleiro):
 def inicializar_tabuleiro(tabuleiro_inicial):
 
     tabuleiro = []
+    
+    # colunas e linhas que darão as coodenadas
     letras = "ABCDEFGHIJ"
     numeros = "0123456789"
 
+    # estrutura da linhas da letras que são add no início e no fim do tabuleiro
     linha_superior = "  " + "|".join([""+letra+"" for letra in letras]) + ""
     linha_inferior = "  " + "|".join([""+letra+"" for letra in letras]) + ""
 
+    # estrutura usada para separar visualemnte as casas (vamos nos referir a ele como separador)
     separador = " +-+-+-+-+-+-+-+-+-+-+ "
+
+    # adiciona no topo uma linha de letras e um separador logo abaixo
     tabuleiro.append(linha_superior)
     tabuleiro.append(separador)
+
 
     for i in range(10):
         linha = numeros[i] + "|"
@@ -96,15 +103,15 @@ def movimento_valido(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial, 
                     obstaculos_seguidos += 1
             if tabuleiro_inicial[linha_inicial][coluna_inicial] == "&":
                 if tabuleiro_inicial[i][j] != " " and tabuleiro_inicial[i][j] != "o" and tabuleiro_inicial[i][j] != "O":
-                    return False        
+                    return False   
+                if tabuleiro_inicial[i][j] == "o" or tabuleiro_inicial[i][j] == "O":
+                    obstaculos_seguidos += 1     
             i += linha_direcao
             j += coluna_direcao
         if obstaculos_seguidos > 1:
             return False    
 
     return True
-
-
 
 def realizar_movimento(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial, coluna_final, linha_final):
     
@@ -120,6 +127,24 @@ def realizar_movimento(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial
         elif jogador == "B" and (tabuleiro_inicial[linha_comida][coluna_comida] == "o" or tabuleiro_inicial[linha_comida][coluna_comida] == "O"):
             # Remover a peça inimiga do tabuleiro
             tabuleiro_inicial[linha_comida][coluna_comida] = " "
+    
+    # captura de peças pela dama
+    if tabuleiro_inicial[linha_inicial][coluna_inicial] == "O" or tabuleiro_inicial[linha_inicial][coluna_inicial] == "&":
+        linha_direcao = 1 if linha_final > linha_inicial else -1
+        coluna_direcao = 1 if coluna_final > coluna_inicial else -1
+        i = linha_inicial + linha_direcao
+        j = coluna_inicial + coluna_direcao
+        while i != linha_final and j != coluna_final:
+            if tabuleiro_inicial[linha_inicial][coluna_inicial] == "O":
+                if tabuleiro_inicial[i][j] == "@" or tabuleiro_inicial[i][j] == "&":
+                    tabuleiro_inicial[i][j] = " "
+            if tabuleiro_inicial[linha_inicial][coluna_inicial] == "&":  
+                if tabuleiro_inicial[i][j] == "o" or tabuleiro_inicial[i][j] == "O":
+                    tabuleiro_inicial[i][j] = " "    
+            i += linha_direcao
+            j += coluna_direcao
+
+
     # fazer o movimento
     tabuleiro_inicial[linha_final][coluna_final] = tabuleiro_inicial[linha_inicial][coluna_inicial]
     tabuleiro_inicial[linha_inicial][coluna_inicial] = " "
@@ -130,14 +155,17 @@ def realizar_movimento(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial
     elif jogador == "B" and linha_final == 0:
         tabuleiro_inicial[linha_final][coluna_final] = "&"
 
+    
+    
+      
 def jogo_damas():
     erro = "mac"
     tabuleiro_inicial = [
-    ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
-    ["o", "#", "o", "#", "o", "#", "o", "#", "o", "#"],
-    ["#", "o", "#", " ", "#", "o", "#", "o", "#", "o"],
-    [" ", "#", " ", "#", "O", "#", " ", "#", " ", "#"],
-    ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
+    ["#", " ", "#", "o", "#", "o", "#", "o", "#", "o"],
+    ["o", "#", "@", "#", "o", "#", "o", "#", "o", "#"],
+    ["#", "o", "#", "@", "#", "o", "#", "o", "#", "o"],
+    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    ["#", " ", "#", " ", "#", "O", "#", " ", "#", " "],
     [" ", "#", " ", "#", " ", "#", " ", "#", " ", " "],
     ["#", " ", "#", " ", "#", " ", "#", "@", "#", " "],
     ["@", "#", "@", "#", "@", "#", "@", "#", " ", "#"],
@@ -188,3 +216,9 @@ def jogo_damas():
             jogador_atual = "C"
 
 jogo_damas()
+
+
+
+
+
+
