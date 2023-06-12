@@ -83,16 +83,24 @@ def movimento_valido(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial, 
 
     # verifica movimento dama
     if tabuleiro_inicial[linha_inicial][coluna_inicial] == "O" or tabuleiro_inicial[linha_inicial][coluna_inicial] == "&":
-        linha_direction = 1 if linha_final > linha_inicial else -1
-        coluna_direction = 1 if coluna_final > coluna_inicial else -1
-        i = linha_inicial + linha_direction
-        j = coluna_inicial + coluna_direction
-
+        linha_direcao = 1 if linha_final > linha_inicial else -1
+        coluna_direcao = 1 if coluna_final > coluna_inicial else -1
+        i = linha_inicial + linha_direcao
+        j = coluna_inicial + coluna_direcao
+        obstaculos_seguidos = 0
         while i != linha_final and j != coluna_final:
-            if tabuleiro_inicial[i][j] != " ":
-                return False
-            i += linha_direction
-            j += coluna_direction
+            if tabuleiro_inicial[linha_inicial][coluna_inicial] == "O":
+                if tabuleiro_inicial[i][j] != " " and tabuleiro_inicial[i][j] != "@" and tabuleiro_inicial[i][j] != "&":
+                    return False
+                if tabuleiro_inicial[i][j] == "@" or tabuleiro_inicial[i][j] == "&":
+                    obstaculos_seguidos += 1
+            if tabuleiro_inicial[linha_inicial][coluna_inicial] == "&":
+                if tabuleiro_inicial[i][j] != " " and tabuleiro_inicial[i][j] != "o" and tabuleiro_inicial[i][j] != "O":
+                    return False        
+            i += linha_direcao
+            j += coluna_direcao
+        if obstaculos_seguidos > 1:
+            return False    
 
     return True
 
@@ -112,24 +120,29 @@ def realizar_movimento(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial
         elif jogador == "B" and (tabuleiro_inicial[linha_comida][coluna_comida] == "o" or tabuleiro_inicial[linha_comida][coluna_comida] == "O"):
             # Remover a peça inimiga do tabuleiro
             tabuleiro_inicial[linha_comida][coluna_comida] = " "
-    
-    
+    # fazer o movimento
     tabuleiro_inicial[linha_final][coluna_final] = tabuleiro_inicial[linha_inicial][coluna_inicial]
     tabuleiro_inicial[linha_inicial][coluna_inicial] = " "
+
+    #transforma peça em damas
+    if jogador == "C" and linha_final == 9:
+        tabuleiro_inicial[linha_final][coluna_final] = "O"
+    elif jogador == "B" and linha_final == 0:
+        tabuleiro_inicial[linha_final][coluna_final] = "&"
 
 def jogo_damas():
     erro = "mac"
     tabuleiro_inicial = [
     ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
     ["o", "#", "o", "#", "o", "#", "o", "#", "o", "#"],
-    ["#", " ", "#", "o", "#", "o", "#", "o", "#", "o"],
-    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
-    ["#", "o", "#", " ", "#", " ", "#", " ", "#", " "],
-    [" ", "#", "@", "#", " ", "#", " ", "#", " ", " "],
+    ["#", "o", "#", " ", "#", "o", "#", "o", "#", "o"],
+    [" ", "#", " ", "#", "O", "#", " ", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
-    [" ", "#", "@", "#", "@", "#", "@", "#", "@", "#"],
+    [" ", "#", " ", "#", " ", "#", " ", "#", " ", " "],
+    ["#", " ", "#", " ", "#", " ", "#", "@", "#", " "],
+    ["@", "#", "@", "#", "@", "#", "@", "#", " ", "#"],
     ["#", "@", "#", "@", "#", "@", "#", "@", "#", "@"],
-    ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"]
+    ["@", "#", "@", "#", "@", "#", "@", "#", " ", "#"]
     ]
     
     jogador_atual = "C"
