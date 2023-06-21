@@ -234,16 +234,16 @@ def verificar_capturas_possiveis(tabuleiro_inicial, jogador, coluna, linha):
     return (movimentos_captura, matriz_letras) if capturas_possiveis else ([], matriz_letras)     
 def jogo_damas():
     erro = "**"
-    jogador_atual = input(print("Digite qual usuário deve começar: C(o) ou B(@): "))
+    jogador_atual = input("Digite qual usuário deve começar: C(o) ou B(@): ")
     jogador_atual = jogador_atual.upper()
     global vencedor
     tabuleiro_inicial = [
     ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
     ["o", "#", "o", "#", "o", "#", "o", "#", "o", "#"],
     ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
-    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    [" ", "#", " ", "#", " ", "#", "@", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
-    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    [" ", "#", " ", "#", " ", "#", "@", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
     ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"],
     ["#", "@", "#", "@", "#", "@", "#", "@", "#", "@"],
@@ -281,7 +281,7 @@ def jogo_damas():
         linha_inicial = int(movimento[1])
         coluna_final = ord(movimento[4]) - ord('A') 
         linha_final = int(movimento[5])
-
+        if 
         if not movimento_valido(tabuleiro_inicial, jogador_atual, coluna_inicial, linha_inicial, coluna_final, linha_final):
             print("Movimento inválido! Digite novamente.")
             print(erro)
@@ -295,8 +295,9 @@ def jogo_damas():
             
             if out:
                 [(linha_inicial, coluna_inicial), captura] = out
-            
-                movimento_2 = input(print("Digite a posição da peça a ser capturada (A, B, C, D): \n ex: D     B\n        P\n     C     A"))
+                tabuleiro = inicializar_tabuleiro(tabuleiro_inicial)
+                imprimir_tabuleiro(tabuleiro)
+                movimento_2 = input(("Digite a posição da peça a ser capturada (A, B, C, D): \n ex: D     B\n        P\n     C     A"))
                 while True:    
                     if not movimento_2 in matriz_letras:
                         print("Comando inválido: ")
@@ -351,4 +352,3 @@ while a == True:
         print("C venceu")
     revanche()
     
-
