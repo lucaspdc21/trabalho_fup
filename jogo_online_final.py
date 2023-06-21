@@ -109,16 +109,14 @@ def movimento_valido(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial, 
                     return False
                 if tabuleiro_inicial[i][j] == "@" or tabuleiro_inicial[i][j] == "&":
                     obstaculos_seguidos += 1
-                    if tabuleiro_inicial[i+linha_direcao][j-coluna_direcao] != " ":
-                        return False
+                    
             if tabuleiro_inicial[linha_inicial][coluna_inicial] == "&":
                 if tabuleiro_inicial[i][j] != " " and tabuleiro_inicial[i][j] != "o" and tabuleiro_inicial[i][j] != "O":
                     erro = 9
                     return False   
                 if tabuleiro_inicial[i][j] == "o" or tabuleiro_inicial[i][j] == "O":
                     obstaculos_seguidos += 1
-                    if tabuleiro_inicial[i+linha_direcao][j-coluna_direcao] != 0:
-                        return False    
+                       
             i += linha_direcao
             j += coluna_direcao
         if obstaculos_seguidos > 1:
@@ -240,13 +238,13 @@ def jogo_damas():
     tabuleiro_inicial = [
     ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
     ["o", "#", "o", "#", "o", "#", "o", "#", "o", "#"],
-    ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
-    [" ", "#", " ", "#", " ", "#", "@", "#", " ", "#"],
+    ["#", "o", "#", "o", "#", "@", "#", "o", "#", "o"],
+    [" ", "#", " ", "#", " ", "#", "o", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
-    [" ", "#", " ", "#", " ", "#", "@", "#", " ", "#"],
+    [" ", "#", " ", "#", " ", "#", "o", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
-    ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"],
-    ["#", "@", "#", "@", "#", "@", "#", "@", "#", "@"],
+    ["@", "#", "@", "#", "o", "#", "o", "#", "@", "#"],
+    ["#", "@", "#", " ", "#", "@", "#", " ", "#", "@"],
     ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"]
     ]
 
@@ -273,7 +271,7 @@ def jogo_damas():
             break
 
         if len(movimento) != 6:
-            print("Movimento inválido, Digite novamente. S1")
+            print("Movimento inválido, Digite novamente.")
             continue
         # ord retorna o valor ASCII da letra, pela subatração [cap[0]conseguimos a posição relativa em relação a A
         # ou seja, transforma as letras em números 
@@ -281,7 +279,7 @@ def jogo_damas():
         linha_inicial = int(movimento[1])
         coluna_final = ord(movimento[4]) - ord('A') 
         linha_final = int(movimento[5])
-        if 
+         
         if not movimento_valido(tabuleiro_inicial, jogador_atual, coluna_inicial, linha_inicial, coluna_final, linha_final):
             print("Movimento inválido! Digite novamente.")
             print(erro)
@@ -294,23 +292,28 @@ def jogo_damas():
             captura = False
             
             if out:
-                [(linha_inicial, coluna_inicial), captura] = out
-                tabuleiro = inicializar_tabuleiro(tabuleiro_inicial)
-                imprimir_tabuleiro(tabuleiro)
-                movimento_2 = input(("Digite a posição da peça a ser capturada (A, B, C, D): \n ex: D     B\n        P\n     C     A"))
-                while True:    
-                    if not movimento_2 in matriz_letras:
-                        print("Comando inválido: ")
-                        movimento_2 = input(print("Digite a posição da peça a ser capturada (A, B, C, D): \n ex: D     B\n        P\n     C     A"))
-                    else:
-                        break
-                tamanho_da_matriz = len(matriz_letras)
-                for i in range(tamanho_da_matriz):
-                    if movimento_2 == matriz_letras[i]:
-                        a = i
+                if len(matriz_letras) == 1:
+                    [(linha_inicial, coluna_inicial), captura] = out
+                    coluna_final = captura[0][0]
+                    linha_final  = captura[0][1]
+                else:
+                    [(linha_inicial, coluna_inicial), captura] = out
+                    tabuleiro = inicializar_tabuleiro(tabuleiro_inicial)
+                    imprimir_tabuleiro(tabuleiro)
+                    movimento_2 = input("Digite a posição da peça a ser capturada (A, B, C, D): \n ex: D     B\n        P\n     C     A\n")
+                    while True:    
+                        if not movimento_2 in matriz_letras:
+                            print("Comando inválido: ")
+                            movimento_2 = input("Digite a posição da peça a ser capturada (A, B, C, D): \n ex: D     B\n        P\n     C     A\n")
+                        else:
+                            break
+                    tamanho_da_matriz = len(matriz_letras)
+                    for i in range(tamanho_da_matriz):
+                        if movimento_2 == matriz_letras[i]:
+                            a = i
 
-                coluna_final = captura[a][0]
-                linha_final  = captura[a][1]
+                    coluna_final = captura[a][0]
+                    linha_final  = captura[a][1]
             if not captura:
                 break
 
@@ -338,6 +341,7 @@ while a == True:
     def revanche():
         global a
         escolha = (input("Deseja jogar novamente? (Digite SIM ou NAO) :"))
+        escolha = escolha.upper()
         if escolha == "SIM":
             a = True
             return  a
