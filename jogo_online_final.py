@@ -273,12 +273,19 @@ def jogo_damas():
         if len(movimento) != 6:
             print("Movimento inválido, Digite novamente.")
             continue
+        if type(movimento[0]) != 'str' or type(movimento[4]) != 'str' or type(movimento[1]) != 'int' or type(movimento[5]) != "int":
+            print("Entrada inválida, digite novamente: ")
+            continue
+
+
         # ord retorna o valor ASCII da letra, pela subatração [cap[0]conseguimos a posição relativa em relação a A
         # ou seja, transforma as letras em números 
         coluna_inicial = ord(movimento[0]) - ord('A') 
         linha_inicial = int(movimento[1])
         coluna_final = ord(movimento[4]) - ord('A') 
         linha_final = int(movimento[5])
+        
+
          
         if not movimento_valido(tabuleiro_inicial, jogador_atual, coluna_inicial, linha_inicial, coluna_final, linha_final):
             print("Movimento inválido! Digite novamente.")
