@@ -125,6 +125,8 @@ def movimento_valido(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial, 
     if verificar_captura_obrigatoria(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial) == True:
         if abs(coluna_inicial - coluna_final) == 1:
             return False
+        
+        
     return True
 
 def realizar_movimento(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial, coluna_final, linha_final):
@@ -220,6 +222,7 @@ def verificar_captura_obrigatoria(tabuleiro_inicial, jogador, coluna, linha):
             # Verificar se a posição alvo contém uma peça do oponente e a posição de captura está vazia
             if peca_alvo in pecas_oponente and peca_captura == " ":
                 capturas_possiveis = True
+            
     return capturas_possiveis  
 def verificar_capturas_possiveis(tabuleiro_inicial, jogador, coluna, linha):
     capturas_possiveis = False
