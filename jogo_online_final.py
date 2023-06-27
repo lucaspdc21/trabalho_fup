@@ -238,13 +238,13 @@ def jogo_damas():
     tabuleiro_inicial = [
     ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
     ["o", "#", "o", "#", "o", "#", "o", "#", "o", "#"],
-    ["#", "o", "#", "o", "#", "@", "#", "o", "#", "o"],
-    [" ", "#", " ", "#", " ", "#", "o", "#", " ", "#"],
+    ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
+    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
-    [" ", "#", " ", "#", " ", "#", "o", "#", " ", "#"],
+    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
     ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
-    ["@", "#", "@", "#", "o", "#", "o", "#", "@", "#"],
-    ["#", "@", "#", " ", "#", "@", "#", " ", "#", "@"],
+    ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"],
+    ["#", "@", "#", "@", "#", "@", "#", "@", "#", "@"],
     ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"]
     ]
 
@@ -273,10 +273,7 @@ def jogo_damas():
         if len(movimento) != 6:
             print("Movimento inválido, Digite novamente.")
             continue
-        if type(movimento[0]) != 'str' or type(movimento[4]) != 'str' or type(movimento[1]) != 'int' or type(movimento[5]) != "int":
-            print("Entrada inválida, digite novamente: ")
-            continue
-
+        
 
         # ord retorna o valor ASCII da letra, pela subatração [cap[0]conseguimos a posição relativa em relação a A
         # ou seja, transforma as letras em números 
@@ -344,7 +341,7 @@ def jogo_damas():
             
 a = True 
 while a == True:
-    
+    #função que retorna se o jogo deve reiniciar
     def revanche():
         global a
         escolha = (input("Deseja jogar novamente? (Digite SIM ou NAO) :"))
@@ -355,8 +352,9 @@ while a == True:
         elif escolha == "NAO":
             a = False
             return a 
-    
+    #inicia do jogo
     jogo_damas()
+    #printa o vencedor do jogo
     if vencedor == "B":
         print("B venceu")
     if vencedor == "C":
