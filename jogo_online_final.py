@@ -122,7 +122,9 @@ def movimento_valido(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial, 
         if obstaculos_seguidos > 1:
             erro = 10
             return False    
-            
+    if verificar_captura_obrigatoria(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial) == True:
+        if abs(coluna_inicial - coluna_final) == 1:
+            return False
     return True
 
 def realizar_movimento(tabuleiro_inicial, jogador, coluna_inicial, linha_inicial, coluna_final, linha_final):
@@ -193,7 +195,32 @@ def contar_caractere(matriz, peca, dama):
             if elemento == dama:
                 contador += 1
     return contador    
+def verificar_captura_obrigatoria(tabuleiro_inicial, jogador, coluna, linha):
+    capturas_possiveis = False
 
+    # verifica o jogador
+    if jogador == "C":
+        pecas_oponente = ["@", "&"]
+    else:
+        pecas_oponente = ["o", "O"]
+    
+    # verificar as diagonais
+    movimentos_diagonais = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+    for direcao in movimentos_diagonais:
+        coluna_alvo = coluna + direcao[0]
+        linha_alvo = linha + direcao[1]
+        coluna_captura = coluna + 2 * direcao[0]
+        linha_captura = linha + 2 * direcao[1]
+        
+        # Verificar se as posições estão dentro do tabuleiro
+        if coluna_alvo >= 0 and coluna_alvo < 10 and linha_alvo >= 0 and linha_alvo < 10 and coluna_captura >= 0 and coluna_captura < 10 and linha_captura >= 0 and linha_captura < 10:
+            peca_alvo = tabuleiro_inicial[linha_alvo][coluna_alvo]
+            peca_captura = tabuleiro_inicial[linha_captura][coluna_captura]
+            
+            # Verificar se a posição alvo contém uma peça do oponente e a posição de captura está vazia
+            if peca_alvo in pecas_oponente and peca_captura == " ":
+                capturas_possiveis = True
+    return capturas_possiveis  
 def verificar_capturas_possiveis(tabuleiro_inicial, jogador, coluna, linha):
     capturas_possiveis = False
     movimentos_captura = []
