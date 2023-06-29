@@ -1,6 +1,6 @@
 # tabuleiro matriz = tabuleiro sem as frescuras
 # tabuleiro completo = tabuleiro com elas
-
+import sys
 # função usada para imprimir o tabuleiro completo
 def imprimir_tabuleiro(tabuleiro):
     for linha in tabuleiro:
@@ -260,7 +260,7 @@ def verificar_capturas_possiveis(tabuleiro_inicial, jogador, coluna, linha):
         numero_matriz += 1
     
     return (movimentos_captura, matriz_letras) if capturas_possiveis else ([], matriz_letras)     
-def jogo_damas():
+def jogo_damas1():
     erro = "**"
     jogador_atual = input("Digite qual usuário deve começar: C(o) ou B(@): ")
     jogador_atual = jogador_atual.upper()
@@ -281,10 +281,6 @@ def jogo_damas():
     while True:
         tabuleiro = inicializar_tabuleiro(tabuleiro_inicial)
         imprimir_tabuleiro(tabuleiro)
-
-        def printTabueliro(tabuleiro):
-            tabuleiro = inicializar_tabuleiro(tabuleiro_inicial)
-            imprimir_tabuleiro(tabuleiro)
 
         if jogador_atual == "C":
             print("Jogador atual: C (o)")
@@ -368,7 +364,115 @@ def jogo_damas():
         if ocorrencia_C == 0:
             vencedor = "B"
             return False
+def jogo_damas2(lista_de_arquivo):
+    erro = "**"
+    jogador_atual = lista_de_arquivo[0].strip()
+    jogador_atual = jogador_atual.upper()
+    print(jogador_atual)
+    global vencedor
+    tabuleiro_inicial = [
+    ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
+    ["o", "#", "o", "#", "o", "#", "o", "#", "o", "#"],
+    ["#", "o", "#", "o", "#", "o", "#", "o", "#", "o"],
+    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
+    [" ", "#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    ["#", " ", "#", " ", "#", " ", "#", " ", "#", " "],
+    ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"],
+    ["#", "@", "#", "@", "#", "@", "#", "@", "#", "@"],
+    ["@", "#", "@", "#", "@", "#", "@", "#", "@", "#"]
+    ]
+    contador = 1
+    while True:
+        tabuleiro = inicializar_tabuleiro(tabuleiro_inicial)
+        imprimir_tabuleiro(tabuleiro)
+        
+        if jogador_atual == "C":
+            print("Jogador atual: C (o)")
+        else:
+            print("Jogador atual: B (@)")
+
+        movimento = lista_de_arquivo[contador].strip()
+        print(movimento)
+        contador = contador + 1
+        #deixa tudo em maiúsculo para evitar erro do usuário
+        movimento = movimento.upper()
+
+        if movimento == "SAIR":
+            print("Jogo encerrado.")
+            break
+
+        if len(movimento) != 6:
+            print("Movimento inválido, Digite novamente.")
+            continue
+        
+
+        # ord retorna o valor ASCII da letra, pela subatração [cap[0]conseguimos a posição relativa em relação a A
+        # ou seja, transforma as letras em números 
+        coluna_inicial = ord(movimento[0]) - ord('A') 
+        linha_inicial = int(movimento[1])
+        coluna_final = ord(movimento[4]) - ord('A') 
+        linha_final = int(movimento[5])
+        
+
+         
+        if not movimento_valido(tabuleiro_inicial, jogador_atual, coluna_inicial, linha_inicial, coluna_final, linha_final):
+            print("Movimento inválido! Digite novamente.")
+            print(erro)
+            continue
+        
+        
+
+        while True:
+            [tabuleiro_inicial, out, matriz_letras] = realizar_movimento(tabuleiro_inicial, jogador_atual, coluna_inicial, linha_inicial, coluna_final, linha_final)
+            captura = False
             
+            if out:
+                if len(matriz_letras) == 1:
+                    [(linha_inicial, coluna_inicial), captura] = out
+                    coluna_final = captura[0][0]
+                    linha_final  = captura[0][1]
+                else:
+                    [(linha_inicial, coluna_inicial), captura] = out
+                    tabuleiro = inicializar_tabuleiro(tabuleiro_inicial)
+                    imprimir_tabuleiro(tabuleiro)
+                    movimento_2 = lista_de_arquivo[contador].strip()
+                    print(movimento_2)
+                    contador = contador + 1
+                    while True:    
+                        if not movimento_2 in matriz_letras:
+                            print("Comando inválido: ")
+                            movimento_2 = input("Digite a posição da peça a ser capturada (A, B, C, D): \n ex: D     B\n        P\n     C     A\n")
+                        else:
+                            break
+                    tamanho_da_matriz = len(matriz_letras)
+                    for i in range(tamanho_da_matriz):
+                        if movimento_2 == matriz_letras[i]:
+                            a = i
+
+                    coluna_final = captura[a][0]
+                    linha_final  = captura[a][1]
+            if not captura:
+                break
+
+
+        # if capturas:
+        #     tabuleiro_inicial[capturas[0][0]][capturas[0][1]] = 
+
+        if jogador_atual == "C":
+            jogador_atual = "B"
+        else:
+            jogador_atual = "C"
+        
+        ocorrencia_B = contar_caractere(tabuleiro_inicial, "@" , "&")
+        ocorrencia_C = contar_caractere(tabuleiro_inicial, "o" , "O")
+        if ocorrencia_B == 0:
+            vencedor = "C"
+            return False
+        if ocorrencia_C == 0:
+            vencedor = "B"
+            return False
+                       
 a = True 
 while a == True:
     #função que retorna se o jogo deve reiniciar
@@ -382,8 +486,13 @@ while a == True:
         elif escolha == "NAO":
             a = False
             return a 
-    #inicia do jogo
-    jogo_damas()
+    if len(sys.argv) > 1:
+        arquivo_de_texto = sys.argv[1]
+        with open(arquivo_de_texto, 'r') as arquivo:
+            linhas = arquivo.readlines()
+        jogo_damas2(linhas)
+    else:
+        jogo_damas1()
     #printa o vencedor do jogo
     if vencedor == "B":
         print("B venceu")
@@ -391,3 +500,6 @@ while a == True:
         print("C venceu")
     revanche()
     
+    
+
+
