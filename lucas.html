@@ -1,122 +1,47 @@
+
+
+HTML:
+
+html
+Copy code
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site de Exemplo</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Card Estilizado</title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#section1">Seção 1</a></li>
-            <li><a href="#section2">Seção 2</a></li>
-            <li><a href="#section3">Seção 3</a></li>
-        </ul>
-    </nav>
-
-    <section id="section1">
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <p>Conteúdo da Seção 1</p>
-    </section>
-
-    <section id="section2">
-        <h1>Seção 2</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <p>Conteúdo da Seção 2</p>
-    </section>
-
-    <section id="section3">
-        <h1>esther bobona</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>Seção 1</h1>
-        <h1>esther bobona</h1>
-        <p>Conteúdo da Seção 3</p>
-    </section>
-
-    <script>
-        // JavaScript para rolagem suave
-        const links = document.querySelectorAll('nav a');
-        
-        links.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                
-                const targetId = link.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-                
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+    <div class="card">
+        <img src="imagem.jpg" alt="Imagem do Card">
+        <div class="card-content">
+            <h2>Título do Card</h2>
+            <p>Descrição do card vai aqui. Você pode adicionar mais texto e conteúdo conforme necessário.</p>
+        </div>
+    </div>
 </body>
 </html>
+CSS (styles.css):
+
+css
+Copy code
+
+.card {
+    width: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.card-content {
+    padding: 20px;
+}
