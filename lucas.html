@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de Exemplo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#section1">Seção 1</a></li>
+            <li><a href="#section2">Seção 2</a></li>
+            <li><a href="#section3">Seção 3</a></li>
+        </ul>
+    </nav>
+
+    <section id="section1">
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <p>Conteúdo da Seção 1</p>
+    </section>
+
+    <section id="section2">
+        <h1>Seção 2</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <p>Conteúdo da Seção 2</p>
+    </section>
+
+    <section id="section3">
+        <h1>Seção 3</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <h1>Seção 1</h1>
+        <p>Conteúdo da Seção 3</p>
+    </section>
+
+    <script>
+        // JavaScript para rolagem suave
+        const links = document.querySelectorAll('nav a');
+        
+        links.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
